@@ -1,0 +1,30 @@
+﻿@page "/account"
+
+@using BlazorApp1.Client.Repositories
+@using BlazorApp1.Shared.Models
+
+@inject IAccountRepository AccountRepository;
+
+<h3>Account</h3>
+
+<EditForm Model="_account" OnValidSubmit="Find">
+    <InputText @bind-Value="login"></InputText>
+    <button class="btn btn-primary">Find</button>
+</EditForm>
+
+<p>Ім'я та фамілія: @_account.FullName</p>
+<p>Курс: @_account.Course</p>
+<p>Група: @_account.Group</p>
+
+
+
+@code {
+    public string login { get; set; }
+
+    private Account _account = new Account();
+
+    async Task Find()
+    {
+        _account = await AccountRepository.GetAccoundByLoginAsync(login);
+    }
+}

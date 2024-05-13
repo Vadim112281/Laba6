@@ -1,0 +1,22 @@
+﻿@page "/club/{id:int}"
+@using BlazorApp1.Client.Repositories
+@using BlazorApp1.Shared.Models
+
+@inject IClubRepository ClubRepository
+
+<p>Name: @_club.Name</p>
+<p>Amount Trophies: @_club.AmountTrophies</p>
+<p>The best Footballer: @_club.TheBestFootballer</p>
+
+@code {
+    private Club _club = new Club();
+
+    [Parameter]
+    public int id { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        _club = await ClubRepository.GetOneClubAsync(id);
+
+    }
+}
